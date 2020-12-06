@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Calculator": {
+      "commandName": "Project",
+      "applicationUrl": "http://localhost:11854",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

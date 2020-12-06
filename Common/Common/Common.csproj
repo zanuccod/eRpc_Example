@@ -12,4 +12,10 @@
     </PackageReference>
     <PackageReference Include="Google.Protobuf" Version="3.14.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Proto\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="Proto\Contracts.proto" />
+  </ItemGroup>
 </Project>

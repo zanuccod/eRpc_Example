@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Common;
+using Grpc.Core;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -13,14 +15,28 @@ namespace Client
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
-        }
+            if (args.Count() != 5)
+                return;
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+            string host = args[0];
+            int port = int.Parse(args[1]);
+            long x = long.Parse(args[2]);
+            string op = args[3];
+            long y = long.Parse(args[4]);
+
+            var channel = new Channel(
+                host,
+                port,
+                ChannelCredentials.Insecure);
+
+            var client = new Svc.SvcClient(channel);
+            var reply = client.Calculate(new CalculateRequest
+            {
+                X = x,
+                Y = y,
+                Op = op
+            });
+            Console.WriteLine($"The calculated result is: {reply.Result}");
+        }
     }
 }
